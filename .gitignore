@@ -1,0 +1,15 @@
+# Dependencies — huge folder, always recreatable with npm install
+node_modules/
+
+# Compiled output — recreatable with npm run build
+public/
+
+# Environment variables — contains your secret API key
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# VS Code settings
+.vscode/
