@@ -1,2 +1,2 @@
 # youtube-AI-summariser
-Summarises youtube videos chrome extension
+A Chrome Extensions which summarises youtube videos
