@@ -4,7 +4,8 @@
   "description": "A Chrome Extensions which summarises youtube videos",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack && cp manifest.json public/manifest.json"
   },
   "keywords": [],
   "author": "",

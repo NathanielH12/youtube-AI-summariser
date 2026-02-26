@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "YouTube AI Summariser",
+  "version": "1.0",
+  "description": "Summarises YouTube videos using AI",
+
+  "permissions": ["activeTab", "scripting"],
+
+  "action": {
+    "default_popup": "popup.html"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js": ["content.js"]
+    }
+  ],
+
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "web_accessible_resources": [
+    {
+      "resources": ["*.png", "*.jpg", "*.svg"],
+      "matches": ["https://www.youtube.com/*"]
+    }
+  ]
+}
