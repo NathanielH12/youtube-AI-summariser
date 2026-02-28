@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Youtube AI Summariser</title>
+    <!--Same reason — your CSS is bundled directly into popup.js via style-loader 
+    and gets injected as <style> tags automatically when the JS runs.-->
 </head>
 <body>
     <!--It's an empty div that React will use as its mounting point — 
@@ -11,4 +13,9 @@
     You never put any visible content directly in this HTML file-->
     <div id="root"></div>
 </body>
+    <!--You'd normally need a <script src="popup.js"> to load your JavaScript. 
+        But notice there isn't one here — that's because HtmlWebpackPlugin in 
+        your webpack.config.js automatically injects it at build time. 
+        When Webpack runs, it generates popup.html in /public with the script 
+        tag already added. That's the whole point of that plugin-->
 </html>
