@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { getLLMSummary } from '../open-ai'
-import '../index.css'
 
 interface SidebarProps {
   title: string
