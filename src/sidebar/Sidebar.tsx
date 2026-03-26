@@ -26,30 +26,41 @@ export const Sidebar: React.FC<SidebarProps> = ({ title, transcript }) => {
   }
 
   return (
-    <div className="fixed right-4 top-1/2 -translate-y-1/2 z-50">
-      <div 
-        className={`bg-white p-4 rounded-lg shadow-xl cursor-pointer border-2 border-gray-200 transition-all duration-200 hover:shadow-2xl ${
-          open ? 'w-96 h-96' : 'w-20 h-20'
-        }`}
+    <div style={{ position: 'fixed', right: '20px', top: '50%', transform: 'translateY(-50%)', zIndex: 9999 }}>
+      <div
         onClick={toggleBox}
+        style={{
+          backgroundColor: 'white',
+          padding: '16px',
+          borderRadius: '12px',
+          boxShadow: '0 8px 32px rgba(0,0,0,0.15)',
+          cursor: 'pointer',
+          border: '2px solid #e5e7eb',
+          width: open ? '320px' : '64px',
+          height: open ? '380px' : '64px',
+          overflow: 'hidden',
+          transition: 'all 0.2s ease',
+          display: 'flex',
+          flexDirection: 'column',
+        }}
       >
         {open ? (
           <>
-            <h3 className="text-lg font-bold mb-2">AI Summary</h3>
+            <h3 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '8px', color: '#111' }}>AI Summary</h3>
             {loading ? (
-              <p className="text-gray-500">Generating summary...</p>
+              <p style={{ color: '#6b7280', fontSize: '14px' }}>Generating summary...</p>
             ) : summary ? (
-              <div className="text-sm text-gray-700 leading-relaxed">
+              <div style={{ fontSize: '14px', color: '#374151', lineHeight: '1.6', overflowY: 'auto' }}>
                 {summary.split('\n').map((line, i) => (
-                  <p key={i}>{line}</p>
+                  <p key={i} style={{ marginBottom: '4px' }}>{line}</p>
                 ))}
               </div>
             ) : (
-              <p className="text-sm text-gray-500">Click to summarise</p>
+              <p style={{ color: '#9ca3af', fontSize: '14px' }}>Click to summarise</p>
             )}
           </>
         ) : (
-          <div className="text-2xl">🤖</div>
+          <div style={{ fontSize: '28px', textAlign: 'center', lineHeight: '32px' }}>🤖</div>
         )}
       </div>
     </div>

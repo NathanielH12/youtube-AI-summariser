@@ -1,44 +1,45 @@
-// Gets the video title from the YouTube page
-export const getVideoTitle = (): string => {
-  const titleElement = document.querySelector('h1.title yt-formatted-string')
-  return titleElement?.textContent?.trim() || 'Unknown Video'
+export const getVideoTitle = async (videoId: string): Promise<string> => {
+  const response = await fetch(`https://www.youtube.com/watch?v=${videoId}`)
+  const html = await response.text()
+  const match = html.match(/<title>(.*?)<\/title>/)
+  return match ? match[1].replace(' - YouTube', '').trim() : 'Unknown Video'
 }
 
-// Gets caption tracks from the YouTube page and returns the English one
-const getCaptionTracks = (): { lang: string; url: string }[] => {
-  const captionButton = document.querySelector('button[aria-label*="captions"]')
-  if (!captionButton) return []
-
-  const tracks = captionButton.getAttribute('aria-label')?.match(/\((\w+)\)/g)
-  // This is a simplified extraction — in reality you'd parse the track menu
-  // For now, we'll assume English captions exist
-  return [{ lang: 'en', url: 'https://youtube.com/api/timedtext?v=VIDEO_ID&lang=en' }]
+const getCaptionTracks = async (videoId: string): Promise<any[]> => {
+  const response = await fetch(`https://www.youtube.com/watch?v=${videoId}`)
+  const html = await response.text()
+  const match = html.match(/"captionTracks":(\[.*?\])/)
+  if (!match) return []
+  return JSON.parse(match[1])
 }
 
-// Fetches the transcript from a caption track URL and formats it
-const getXMLTranscript = async (trackUrl: string): Promise<string> => {
-  const response = await fetch(trackUrl)
+const getXMLTranscript = async (baseUrl: string): Promise<string> => {
+  const decodedUrl = baseUrl.replace(/\\u0026/g, '&')
+
+  const response = await fetch(decodedUrl, { credentials: 'include' })
   const xml = await response.text()
 
-  // Parse XML and extract text with timestamps
   const parser = new DOMParser()
   const doc = parser.parseFromString(xml, 'text/xml')
   const texts = Array.from(doc.querySelectorAll('text'))
-    .map(text => text.textContent)
+    .map(el => el.textContent)
     .join(' ')
 
   return texts.trim()
 }
 
-// Main function — gets both title and transcript
-export const getYouTubeTranscript = async (): Promise<{ title: string; transcript: string }> => {
-  const title = getVideoTitle()
-  const tracks = getCaptionTracks()
-  
-  if (tracks.length === 0) {
-    throw new Error('No captions available')
-  }
+export const getYouTubeTranscript = async (videoId: string): Promise<{ title: string; transcript: string }> => {
+  const [title, captionTracks] = await Promise.all([
+    getVideoTitle(videoId),
+    getCaptionTracks(videoId)
+  ])
 
-  const transcript = await getXMLTranscript(tracks[0].url)
+  if (captionTracks.length === 0) throw new Error('No captions available')
+
+  const track = captionTracks.find((t: any) =>
+    t.languageCode === 'en' || t.vssId?.includes('.en')
+  ) || captionTracks[0]
+
+  const transcript = await getXMLTranscript(track.baseUrl)
   return { title, transcript }
 }

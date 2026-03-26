@@ -5,7 +5,8 @@
     "jsx": "react-jsx",
     "strict": true,
     "esModuleInterop": true,
-    "moduleResolution": "node",
+    "moduleDetection": "auto",
+    "rootDir": "./src",
     "outDir": "./public"
   },
   "include": ["src"]

@@ -12,6 +12,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/chrome": "^0.1.37",
+    "@types/node": "^25.5.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "autoprefixer": "^10.4.24",
@@ -27,6 +28,7 @@
     "webpack-cli": "^6.0.1"
   },
   "dependencies": {
+    "@google/genai": "^1.46.0",
     "dotenv": "^17.3.1",
     "react": "^19.2.4",
     "react-dom": "^19.2.4"

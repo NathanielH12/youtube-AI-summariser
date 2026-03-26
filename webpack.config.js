@@ -42,11 +42,10 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/popup/index.html',
       filename: 'popup.html',
-      chunks: ['popup'],
+      chunks: ['popup']
     }),
-
     new webpack.DefinePlugin({
-      'process.env.OPENAI_API_KEY': JSON.stringify(process.env.OPENAI_API_KEY),
-    }),
-  ],
-};
+      'process.env.GROQ_API_KEY': JSON.stringify(process.env.GROQ_API_KEY)
+    })
+  ]
+}
