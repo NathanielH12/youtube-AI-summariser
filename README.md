@@ -4,14 +4,9 @@ A Chrome extension that injects an AI-powered sidebar into YouTube,
 fetching real video transcripts and generating summaries using the 
 Groq LLaMA 3.1 API.
 
-## Demo
-![demo gif or screenshot here]
-
 ## Features
 - Automatically injects a sidebar on any YouTube video page
-- Fetches and parses real video transcripts via YouTube's caption API
-- Generates concise AI summaries using Groq's LLaMA 3.1 8B model
-- Handles YouTube's single-page app navigation via MutationObserver
+- Generates concise AI summaries using Groq's LLaMA 3.1 8B model based on the youtube video's title
 - Secure API key injection at build time via Webpack DefinePlugin
 
 ## Tech Stack
